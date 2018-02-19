@@ -1,39 +1,36 @@
----
-title: "Step Analyzer"
-output: github_document
----
+Step Analyzer
+================
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+Introduction
+============
 
-
-# Introduction
-It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. 
+It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up.
 
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
-## Activity Data
+Activity Data
+-------------
 
 The variables included in this dataset are:
 
-- steps: Number of steps taking in a 5-minute interval (missing values are coded as 𝙽𝙰)
-- date: The date on which the measurement was taken in YYYY-MM-DD format
-- interval: Identifier for the 5-minute interval in which measurement was taken
+-   steps: Number of steps taking in a 5-minute interval (missing values are coded as 𝙽𝙰)
+-   date: The date on which the measurement was taken in YYYY-MM-DD format
+-   interval: Identifier for the 5-minute interval in which measurement was taken
 
 The dataset is stored in a comma-separated-value (CSV) file and there are a total of 17,568 observations in this dataset.
 
 Open the dataset:
-```{r}
 
+``` r
 ds <- read.csv("activity.csv")
-
 ```
 
-## Activity Report
+Activity Report
+---------------
+
 ### Total Number of Steps taken each day
 
-```{r echo=TRUE}
+``` r
 cStepsDaily <- with(ds, tapply( steps, date, sum, na.rm=T))
 cDates <- unique(ds$date)
 hist(cStepsDaily, breaks=60, xlab="Daily Steps", ylab="Frequency", main="Daily Steps Over Two Months\n (61 days) ")
@@ -48,12 +45,13 @@ abline(v=md, untf=FALSE, col=3, lty=3, lwd=2)
 t1<-paste("median (",format(md,digits=0),")")
 t2<-paste("mean   (",format(mn,digits=0),")")
 legend("topright", c(t1,t2), col=2:3, lty=2:3, lwd=2)
-
 ```
 
-### Time Series Plot  Average Number of Steps Taken (plot)
-```{r echo=TRUE}
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
+### Time Series Plot Average Number of Steps Taken (plot)
+
+``` r
 cStepsInterval <- with(ds, tapply( steps, interval, mean, na.rm=T))
 cIntervals <-unique(ds$interval)
 
@@ -74,14 +72,13 @@ t <-paste("Max Avg",y,"steps\n at time interval",i)
 text(1500,x-16,t, col=2)
 # add a vertical line indicating the time intervale.
 abline(v=i, col=2, lty=2)
-
-
 ```
 
-
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ### Code to describe and show a strategy for computing missing data
-```{r}
+
+``` r
 # Make a copy of the data set with missing values so the original dataset is preserved
 ds2 <- ds
 
@@ -101,9 +98,11 @@ t <- paste("There are", nMissingSteps, "missing step intervals.")
 print(t)
 ```
 
-### Total Number of Steps Taken Each Day (NA computed and included)
-```{r echo=TRUE}
+    ## [1] "There are 2304 missing step intervals."
 
+### Total Number of Steps Taken Each Day (NA computed and included)
+
+``` r
 cStepsDaily <- with(ds2, tapply( steps, date, sum, na.rm=T))
 cDates <- unique(ds2$date)
 hist(cStepsDaily, breaks=60, xlab="Daily Steps", ylab="Frequency", main="Daily Steps Over Two Months\n (61 days) ")
@@ -111,15 +110,21 @@ hist(cStepsDaily, breaks=60, xlab="Daily Steps", ylab="Frequency", main="Daily S
 abline(v=mean(cStepsDaily), untf=FALSE, col=2, lty=2, lwd=2)
 abline(v=median(cStepsDaily), untf=FALSE, col=3, lty=3, lwd=2)
 legend("topright", c("median","mean"), col=2:3, lty=2:3, lwd=2)
-
 ```
 
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 ### Panel plot comparing the average number of steps taken per 5-minute intervals across weekdays and weekends (NAs imputed)
-```{r echo=TRUE}
+
+``` r
 library(ggplot2)
 cDays <- weekdays(as.Date(ds2[,2]), abbreviate = TRUE)
+```
 
+    ## Warning in strptime(xx, f <- "%Y-%m-%d", tz = "GMT"): unknown timezone
+    ## 'default/America/Los_Angeles'
+
+``` r
 n = cDays  == "Sun" | cDays == "Sat"
 
 dsWeekdays <- ds2[!n,]
@@ -149,7 +154,6 @@ ggplot(df, aes(interval,steps)) +
   geom_line() + facet_grid(. ~ daytype)+
   xlab("Time Interval") +ylab("Average Steps") +
   ggtitle("Step Activity: Weekdays vs. Weekends")
-
 ```
 
-
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-6-1.png)
