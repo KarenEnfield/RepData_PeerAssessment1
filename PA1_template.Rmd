@@ -51,6 +51,14 @@ legend("topright", c(t1,t2), col=2:3, lty=2:3, lwd=2)
 
 ```
 
+The mean step value is 
+```{r echo=TRUE}
+mean(cStepsDaily)
+```
+The median step value is 
+```{r echo=TRUE}
+median(cStepsDaily)
+```
 ### Time Series Plot  Average Number of Steps Taken (plot)
 ```{r echo=TRUE}
 
@@ -78,7 +86,14 @@ abline(v=i, col=2, lty=2)
 
 ```
 
-
+The maximum step average is 
+```{r echo=TRUE}
+max(dfTimeAvg$steps)
+```
+at time interval 
+```{r echo=TRUE}
+dfTimeAvg[dfTimeAvg$steps==max(dfTimeAvg$steps),]$interval
+```
 
 ### Code to describe and show a strategy for computing missing data
 ```{r}
@@ -114,6 +129,14 @@ legend("topright", c("median","mean"), col=2:3, lty=2:3, lwd=2)
 
 ```
 
+The median is
+```{r echo=TRUE}
+median(cStepsDaily)
+```
+The mean is
+```{r echo=TRUE}
+mean(cStepsDaily)
+```
 
 ### Panel plot comparing the average number of steps taken per 5-minute intervals across weekdays and weekends (NAs imputed)
 ```{r echo=TRUE}
@@ -152,4 +175,5 @@ ggplot(df, aes(interval,steps)) +
 
 ```
 
+We can see that there are differences in weekday vs. weekend activity patterns.  The weekday activity has a peak activity time, and is relatively sedentary throughout the rest of the day. The weekend activity is more distributed throughout the day.
 

@@ -49,6 +49,22 @@ legend("topright", c(t1,t2), col=2:3, lty=2:3, lwd=2)
 
 ![](PA1_template_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
+The mean step value is
+
+``` r
+mean(cStepsDaily)
+```
+
+    ## [1] 9354.23
+
+The median step value is
+
+``` r
+median(cStepsDaily)
+```
+
+    ## [1] 10395
+
 ### Time Series Plot Average Number of Steps Taken (plot)
 
 ``` r
@@ -74,7 +90,23 @@ text(1500,x-16,t, col=2)
 abline(v=i, col=2, lty=2)
 ```
 
-![](PA1_template_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-5-1.png)
+
+The maximum step average is
+
+``` r
+max(dfTimeAvg$steps)
+```
+
+    ## [1] 206.1698
+
+at time interval
+
+``` r
+dfTimeAvg[dfTimeAvg$steps==max(dfTimeAvg$steps),]$interval
+```
+
+    ## [1] 835
 
 ### Code to describe and show a strategy for computing missing data
 
@@ -112,7 +144,23 @@ abline(v=median(cStepsDaily), untf=FALSE, col=3, lty=3, lwd=2)
 legend("topright", c("median","mean"), col=2:3, lty=2:3, lwd=2)
 ```
 
-![](PA1_template_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+The median is
+
+``` r
+median(cStepsDaily)
+```
+
+    ## [1] 10766.19
+
+The mean is
+
+``` r
+mean(cStepsDaily)
+```
+
+    ## [1] 10766.19
 
 ### Panel plot comparing the average number of steps taken per 5-minute intervals across weekdays and weekends (NAs imputed)
 
@@ -156,4 +204,6 @@ ggplot(df, aes(interval,steps)) +
   ggtitle("Step Activity: Weekdays vs. Weekends")
 ```
 
-![](PA1_template_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](PA1_template_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+We can see that there are differences in weekday vs. weekend activity patterns. The weekday activity has a peak activity time, and is relatively sedentary throughout the rest of the day. The weekend activity is more distributed throughout the day.
